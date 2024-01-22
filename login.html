@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>login</title>
+    <link rel="stylesheet" href="css/login.css">
+
+</head>
+
+<body>
+
+
+
+
+
+
+    <main>
+        <section>
+            <div class="form-container">
+                <div class="form-inner">
+                    <form action="" class="login">
+                        <div class="field">
+
+                        </div>
+                         <div class="field">
+                             <input  type="text" 
+                             placeholder="Email Address" id="usuario" 
+                            required />
+                            </div>
+                         <div class="field">
+                             <input type="password" 
+                                placeholder="Password" id="contra"
+                                required />
+                            </div>
+                       
+                         <div class="field btn">
+                             <div class="btn-layer"></div>
+                             <input type="submit" value="Login" onclick="validarusuario()" />
+                            </div>
+                            </div>
+                        
+                    </form>
+
+                </div>
+
+            </div>
+        </section>
+    </main>
+
+    <script>
+
+
+
+        function validarusuario() {
+            const usuario = document.getElementById('usuario').value;
+            const contra = document.getElementById('contra').value;
+            var userdb;
+            var contradb;
+            if (usuario != "" && contra != ""){
+
+            fetch('login.php', {
+                method: 'POST',
+                headers: { //los headers en Javascript son componentes de solicitudes y respuestas HTTP, es un tipo de API Fecht 
+                    'Content-Type': 'application/json',//Tipo de contenido que se esta enviando (en este caso JSON)
+                },
+                body: JSON.stringify({usuario,contra}),//Convierte los datos en formato JSON y los envia como el cuerpo de la solicitud
+            })
+                .then(response => response.json())
+                .then(usuarios => {
+
+                    usuarios.forEach(datos => {
+
+                        userdb= datos.usuario;
+                        contradb= datos.contrasena;
+                        console.log(datos);
+
+                    });
+
+                    if (userdb == usuario && contradb == contra) {
+                       
+                        window.location.href = 'registro.html';
+                    } else {
+                        alert('Usuario o contraseña inconrrectos');
+                       
+                    }
+
+                });
+            }else
+            {
+                alert('debe ingresar usuario y contraseña');
+
+            }
+
+            document.getElementById('usuario').value = "";
+            document.getElementById('contra').value = "";
+
+        }
+    </script>
+</body>
+
+</html>

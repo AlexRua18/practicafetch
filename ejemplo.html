@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tabla de Productos</title>
+    <style>
+        /* Puedes agregar estilos CSS aquí según tus necesidades */
+    </style>
+</head>
+<body>
+
+<!-- Selecciona el producto -->
+<select id="productoSelector" onchange="cambiarTabla()">
+    <option value="producto1">Producto 1</option>
+    <option value="producto2">Producto 2</option>
+    <option value="producto3">Producto 3</option>
+    <!-- Agrega más opciones según sea necesario -->
+</select>
+
+<!-- Tabla de productos -->
+<table id="tablaProductos">
+    <thead>
+        <tr>
+            <th>Columna1</th>
+            <th>Columna2</th>
+            <!-- Agrega más columnas según sea necesario -->
+        </tr>
+    </thead>
+    <tbody>
+        <!-- Contenido de la tabla se actualizará dinámicamente con JavaScript -->
+    </tbody>
+</table>
+
+<script>
+    // Datos de productos (puedes cargar estos datos desde una base de datos o de otra fuente)
+    const productos = {
+        producto1: [
+            { columna1: 'Valor11', columna2: 'Valor12' },
+            { columna1: 'Valor21', columna2: 'Valor22' },
+            // Agrega más filas según sea necesario
+        ],
+        producto2: [
+            // Datos para el producto 2
+            { columna1: 'producto2', columna2: 'producto2' },
+            { columna1: 'valor2', columna2: 'valor2' },
+        ],
+        producto3: [
+            // Datos para el producto 3
+            { columna1: 'producto3', columna2: 'producto3' },
+            { columna1: 'valor3', columna2: 'valor3' },
+        ],
+        // Agrega más productos según sea necesario
+    };
+
+    // Función para cambiar dinámicamente el contenido de la tabla
+    function cambiarTabla() {
+        const productoSeleccionado = document.getElementById('productoSelector').value;
+        const tablaBody = document.getElementById('tablaProductos').getElementsByTagName('tbody')[0];
+        tablaBody.innerHTML = '';
+
+        productos[productoSeleccionado].forEach(fila => {
+            const nuevaFila = tablaBody.insertRow();
+            Object.values(fila).forEach(valor => {
+                const celda = nuevaFila.insertCell();
+                const textoCelda = document.createTextNode(valor);
+                celda.appendChild(textoCelda);
+            });
+        });
+    }
+
+    // Inicializar la tabla con el primer producto seleccionado
+    cambiarTabla();
+</script>
+
+</body>
+</html>
